@@ -171,7 +171,8 @@ const getuser = async (req, res) => {
 const resetpassword = async (req, res) => {
     try {
 
-        const token = req.query.token;
+        // const token = req.query.token;
+        const token = req.params.token;
         const tokenData = await user.findOne({ token: token });
 
         if (tokenData) {
@@ -187,20 +188,20 @@ const resetpassword = async (req, res) => {
                     const newpassword = await securePassword(new_password);
                     const userdata = await user.findByIdAndUpdate({ _id: tokenData._id }, { $set: { password: newpassword } }, { new: true })
 
-                    res.status(200).send({ success: true, msg: "User password has been reset", data: userdata });
+                    res.status(200).send({ success: false, msg: "User password has been reset", data: userdata });
                 }
                 else {
-                    res.status(200).send({ success: true, msg: "newPassword and confirmPassword didn't match" });
+                    res.status(200).send({ success: false, msg: "newPassword and confirmPassword didn't match" });
                 }
 
             }
             else {
-                res.status(200).send({ success: true, msg: "password is wrong" });
+                res.status(200).send({ success: false, msg: "password is wrong" });
             }
         }
 
         else {
-            res.status(200).send({ success: true, msg: "invalid token" });
+            res.status(200).send({ success: false, msg: "invalid token" });
         }
 
     } catch (error) {
