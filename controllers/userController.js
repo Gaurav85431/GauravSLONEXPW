@@ -107,6 +107,10 @@ const user_login = async (req, res) => {
 
                 const tokenData = await create_token(userData._id);
 
+                // save token in array    first find id and then push new token in array
+                const id = userData._id;
+                const updateToken = await user.updateOne({ _id: id }, { $push: { token: tokenData } });
+
 
                 const userResult = {
                     _id: userData._id,
@@ -172,6 +176,7 @@ const resetpassword = async (req, res) => {
     try {
 
         // const token = req.query.token;
+        // send token while changing password 
         const token = req.params.token;
         const tokenData = await user.findOne({ token: token });
 
