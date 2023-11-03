@@ -15,7 +15,7 @@ const getroute = require("./routes/getRoutes");
 app.use('/api', getroute);
 
 
-
+// 3000
 app.listen(3000, function () {
     console.log("Server is ready");
 })
