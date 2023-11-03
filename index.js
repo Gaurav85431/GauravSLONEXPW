@@ -22,9 +22,9 @@ app.listen(3000, function () {
 
 
 
-
 const PORT = 8000;
-const DB = "mongodb+srv://Gaurav:eP2ILjAadWqdYhMda@gauravlonexpw.ebvoewm.mongodb.net/?retryWrites=true&w=majority";
+const DB = "mongodb+srv://Gaurav:eP2ILjAadWqdYhMda@gauravlonexcrudlogin.zshpihf.mongodb.net/?retryWrites=true&w=majority";
+
 mongoose.connect(DB)
     .then(() => {
         console.log("Connected to MongoDB");
