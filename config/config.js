@@ -1,8 +1,8 @@
-const config= {
+const config = {
     secret_jwt: "thisismysecretkey",
-    emailUser: 'spuspam111@gmail.com',
-    emailPassword: 'nxrh cjsb stsu hrar'
+    emailUser: 'pushpamgaurav3@gmail.com',
+    emailPassword: 'dqde mtsf djcj vhaq'
 
 }
 
-module.exports= config;
+module.exports = config;

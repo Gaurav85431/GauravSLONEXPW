@@ -49,7 +49,8 @@ const register_user = async (req, res) => {
         const users = new user({
             name: req.body.name,
             email: req.body.email,
-            phone: req.body.phone,
+            // phone: req.body.phone,
+            mobile: req.body.mobile,
             password: spassword,
             type: req.body.type
 
@@ -112,7 +113,8 @@ const user_login = async (req, res) => {
                     name: userData.name,
                     email: userData.email,
                     password: userData.password,
-                    phone: userData.phone,
+                    // phone: userData.phone,
+                    mobile: userData.mobile,
                     type: userData.type,
                     token: tokenData
 
@@ -151,7 +153,8 @@ const getuser = async (req, res) => {
             id: item._id,
             name: item.name,
             email: item.email,
-            phone: item.phone,
+            // phone: item.phone,
+            mobile: item.mobile,
             password: item.password,
             type: item.type
 
@@ -187,7 +190,7 @@ const resetpassword = async (req, res) => {
                     res.status(200).send({ success: true, msg: "User password has been reset", data: userdata });
                 }
                 else {
-                    res.status(200).send({ success: true, msg: "new_password and confirm_password didn't match" });
+                    res.status(200).send({ success: true, msg: "newPassword and confirmPassword didn't match" });
                 }
 
             }
@@ -225,7 +228,7 @@ const sendresetpasswordmail = async (username, email, token) => {
             from: config.emailUser,
             to: email,
             subject: 'For reset password',
-            html: '<p> Hii ' + username + ', please click the link <a href= "https://title-74im.onrender.com/api/resetpassword"> and reset your password </a>'
+            html: '<p> Hii ' + username + ', please click the link <a href= "http://127.0.0.1:3000/api/resetpassword"> and reset your password </a>'
         }
 
         transporter.sendMail(mailOption, function (error, info) {
@@ -307,47 +310,47 @@ const emailforgot = async (req, res) => {
 
 const forgetuser = async (req, res) => {
     try {
-        
+
         const email = req.body.email;
-        
+
         const userdata = await user.findOne({ email: email })
         if (!userdata) {
-            res.render('reset', { message: " invalid email" });
+            res.render('reset', { message: "This email doesn't exists" });
         }
 
 
 
         else {
 
-            const password = req.body.password;
-           
-           // const passwordmatch = await bcryptjs.compare(password, userdata.password);
-          //  if (passwordmatch) {
+            // const password = req.body.password;
 
-               
-                const newpassword = req.body.newpassword;
-                const confirmpassword = req.body.confirmpassword;
+            // const passwordmatch = await bcryptjs.compare(password, userdata.password);
+            //  if (passwordmatch) {
 
 
-                if (newpassword === confirmpassword) {
+            const newpassword = req.body.newpassword;
+            const confirmpassword = req.body.confirmpassword;
 
 
-                    const newpswd = await securePassword(newpassword);
-                    const userd = await user.findByIdAndUpdate({ _id: userdata._id }, { $set: { password: newpswd } }, { new: true })
-
-                    res.render('data', { message: " your password has been reset successfully" });
-                    // res.status(200).send({ success: true, msg: "User password has been reset", data: userdata });
+            if (newpassword === confirmpassword) {
 
 
-                    }
-                
+                const newpswd = await securePassword(newpassword);
+                const userd = await user.findByIdAndUpdate({ _id: userdata._id }, { $set: { password: newpswd } }, { new: true })
 
-                else {
+                res.render('data', { message: " Your password has been changed successfully" });
+                // res.status(200).send({ success: true, msg: "User password has been reset", data: userdata });
 
-                    res.render('reset', { message: " new password and confirm password did not match" });
 
-                }
-         //   }
+            }
+
+
+            else {
+
+                res.render('reset', { message: " new password and confirm password did not match" });
+
+            }
+            //   }
             // else {
 
             //     res.render('reset', { message: "old password is wrong " });
@@ -406,6 +409,6 @@ module.exports = {
     emailforgot,
     forgetuser,
     resetpassword
-    
+
 
 }
