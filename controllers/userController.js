@@ -405,6 +405,43 @@ const fogetuser = async (req, res) => {
 }
 */
 
+
+/** logout ke liye all token ko delete kr denge db se */
+
+const logout = async (req, res) => {
+
+    try {
+
+        const token = req.params.token;
+        const tokenData = await user.findOne({ token: token });
+        console.log(tokenData);
+        if (tokenData) {
+
+            const emptyToken = [];
+
+            const userdata = await user.findByIdAndUpdate({ _id: tokenData._id }, { $set: { token: emptyToken } }, { new: true })
+
+
+            res.status(200).send({ success: true, msg: "Logout successfully" });
+
+
+
+        }
+
+        else {
+            res.status(200).send({ success: false, msg: "invalid token" });
+        }
+
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+
+
+}
+
+
+
+
 module.exports = {
 
     register_user,
@@ -414,7 +451,8 @@ module.exports = {
     //reset_password,
     emailforgot,
     forgetuser,
-    resetpassword
+    resetpassword,
+    logout
 
 
 }
